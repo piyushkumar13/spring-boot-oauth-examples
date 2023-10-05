@@ -22,8 +22,8 @@
 
     <modules>
         <module>spring-boot-oauth-resource-server</module>
-        <module>spring-boot-oauth-authorization-server</module>
-        <module>spring-boot-oauth-client-inmemory</module>
+        <module>spring-boot-oauth-auth-server-inmemory</module>
+        <module>spring-boot-oauth-clients</module>
     </modules>
 
     <build>
