@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootOauthAuthorizationServerApplication {
+public class SpringBootOauthAuthServerInmemoryApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootOauthAuthorizationServerApplication.class, args);
+        SpringApplication.run(SpringBootOauthAuthServerInmemoryApplication.class, args);
     }
 
 }
