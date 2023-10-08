@@ -40,6 +40,11 @@ import org.springframework.security.web.SecurityFilterChain;
  *
  * We can get all the endpoints and JWKS at endpoint : http://localhost:8000/.well-known/oauth-authorization-server
  *
+ * Check classes for predefined autoconfiguration :
+ * {@link OAuth2AuthorizationServerConfiguration} -> {@link OAuth2AuthorizationServerConfigurer}
+ *
+ * For all the authorization server endpoints, check class {@link AuthorizationServerSettings#builder()}
+ *
  * @author Piyush Kumar.
  * @since 29/09/23.
  */
@@ -47,24 +52,24 @@ import org.springframework.security.web.SecurityFilterChain;
 //@Import(OAuth2AuthorizationServerConfiguration.class)
 public class AuthorizationServerConfig {
 
-    @Bean
-    public RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder) {
-
-        RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-            .clientId("client1")
-            .clientSecret(passwordEncoder.encode("myclientsecret"))
-            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-            .redirectUri("http://127.0.0.1:8080/login/oauth2/code/my-client-oidc")
-            .redirectUri("http://127.0.0.1:8080/authorized")
-            .scope(OidcScopes.OPENID)
-            .scope("read")
-//            .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
-            .build();
-
-        return new InMemoryRegisteredClientRepository(registeredClient);
-    }
+//    @Bean
+//    public RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder) {
+//
+//        RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
+//            .clientId("client1")
+//            .clientSecret(passwordEncoder.encode("myclientsecret"))
+//            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+//            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+//            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+//            .redirectUri("http://127.0.0.1:8080/login/oauth2/code/my-client-oidc")
+//            .redirectUri("http://127.0.0.1:8080/authorized")
+//            .scope(OidcScopes.OPENID)
+//            .scope("read")
+////            .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+//            .build();
+//
+//        return new InMemoryRegisteredClientRepository(registeredClient);
+//    }
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
