@@ -52,11 +52,25 @@ public class SpringBootOauthAuthServerJpaApplication implements ApplicationRunne
         log.info(":::: Initiating persisting CustomRegisteredClient :::: ");
         String id = UUID.randomUUID().toString();
 
+        /*
+        We can use ClientSettings method to configure
+        requireProofKey - required for enabling PKCE,
+        requireAuthorizationConsent
+        */
         ClientSettings clientSettings = ClientSettings.builder()
             .requireProofKey(false)
             .requireAuthorizationConsent(false)
             .build();
 
+        /*
+        We can use TokenSettings method to configure
+        authorizationCodeTimeToLive,
+        accessTokenTimeToLive,
+        refreshTokenTimeToLive,
+        accessTokenFormat,
+        reuseRefreshTokens,
+        idTokenSignatureAlgorithm
+        */
         TokenSettings tokenSettings = TokenSettings.builder().build();
 
 
@@ -66,8 +80,8 @@ public class SpringBootOauthAuthServerJpaApplication implements ApplicationRunne
             .clientName(id)
             .clientSecret(passwordEncoder.encode("myclientsecret"))
             .authorizationGrantTypes(AuthorizationGrantType.AUTHORIZATION_CODE.getValue() + "," + AuthorizationGrantType.REFRESH_TOKEN.getValue())
-//            .redirectUris("http://127.0.0.1:8080/login/oauth2/code/my-client-oidc")
-            .redirectUris("http://127.0.0.1:8080/authorized")
+            .redirectUris("http://127.0.0.1:8080/login/oauth2/code/my-client-oidc")
+//            .redirectUris("http://127.0.0.1:8080/authorized")
             .scopes(OidcScopes.OPENID + "," + "read")
             .clientAuthenticationMethods(ClientAuthenticationMethod.CLIENT_SECRET_BASIC.getValue())
             .clientSettings(writeMap(clientSettings.getSettings()))
