@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -41,20 +42,28 @@ public class SecurityConfig {
         @Override
         public void configure(HttpSecurity http) throws Exception {
 
+            JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+            converter.setJwtGrantedAuthoritiesConverter(new KeycloakConverter());
+
+
             http.csrf().disable();
             http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/employee/authenticatedUsr/**").authenticated()
+                .antMatchers("/keyclock/authenticatedUsr").authenticated()
                 .antMatchers("/employee/adm/**").hasRole("ADMIN")
                 .antMatchers("/employee/usr/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/checkAuthorities/admUser").hasAuthority("DELETE")
                 .antMatchers("/checkAuthorities/usr").hasAnyAuthority("READ", "WRITE")
+                .antMatchers("/keyclock/scopedUsr").hasAuthority("SCOPE_address")
+                .antMatchers("/keyclock/developerUser").hasRole("DEVELOPER")
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .oauth2ResourceServer()
-                .jwt();
+                .jwt()
+                .jwtAuthenticationConverter(converter);
         }
 
 //        @Bean

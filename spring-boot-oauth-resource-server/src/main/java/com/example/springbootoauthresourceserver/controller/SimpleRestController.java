@@ -11,6 +11,8 @@ package com.example.springbootoauthresourceserver.controller;
 import com.example.springbootoauthresourceserver.domain.Employee;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,7 +44,7 @@ public class SimpleRestController {
     }
 
     @GetMapping("/employee/authenticatedUsr")
-    public ResponseEntity<Object> getAuthenticatedEmployees(){
+    public ResponseEntity<Object> getAuthenticatedEmployees(@AuthenticationPrincipal Jwt jwt) {
 
         Employee employee = Employee.builder()
             .id(1)
@@ -51,6 +53,7 @@ public class SimpleRestController {
             .country("INDIA")
             .department("IT")
             .employeeType("AuthenticUser")
+            .jwt(jwt)
             .build();
 
         return ResponseEntity.ok(employee);

@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 /**
  * @author Piyush Kumar.
@@ -33,4 +34,5 @@ public class Employee {
     private String salary;
     private String currency;
     private String employeeType;
+    private Jwt jwt;
 }
