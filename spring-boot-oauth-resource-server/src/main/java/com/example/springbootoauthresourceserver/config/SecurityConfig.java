@@ -10,6 +10,7 @@ package com.example.springbootoauthresourceserver.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -29,6 +30,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity(debug = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig {
 
 
@@ -58,6 +60,7 @@ public class SecurityConfig {
                 .antMatchers("/checkAuthorities/usr").hasAnyAuthority("READ", "WRITE")
                 .antMatchers("/keyclock/scopedUsr").hasAuthority("SCOPE_address")
                 .antMatchers("/keyclock/developerUser").hasRole("DEVELOPER")
+                .antMatchers("/keyclock/test-post-annotation").authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
