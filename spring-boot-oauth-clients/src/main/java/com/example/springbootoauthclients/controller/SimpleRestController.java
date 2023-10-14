@@ -27,6 +27,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Piyush Kumar.
@@ -41,6 +42,7 @@ public class SimpleRestController {
 
     private final RestTemplate restTemplate;
     private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
+    private final WebClient webClient;
 
     @GetMapping("/test-client")
     public ResponseEntity<Object> getResponse(@RegisteredOAuth2AuthorizedClient("my-client-oidc") OAuth2AuthorizedClient oAuth2AuthorizedClient){
@@ -53,6 +55,22 @@ public class SimpleRestController {
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
         return restTemplate.exchange(url, HttpMethod.GET, entity, Object.class);
+    }
+
+    /**
+     * By using webclient, we don't have to access accessToken manually and pass it with the http request.
+     * Access token will be passed automatically behind the scene.
+     * To pass accessToken automatically with ever request, this filter is used to make it happen :
+     * {@link org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction}
+     */
+    @GetMapping("/test-web-client")
+    public String getResponseUsingWebClient(){
+
+        return webClient.get()
+            .uri(url)
+            .retrieve()
+            .bodyToMono(String.class)
+            .block();
     }
 
     @GetMapping("/keyclock/return-token")
