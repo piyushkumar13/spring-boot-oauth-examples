@@ -3,14 +3,31 @@ spring:
     oauth2:
       client:
         registration:
-          my-client-oidc:
-            client-id: "client1"
-            client-secret: "myclientsecret"
+#          my-client-oidc:
+#            client-id: "client1"
+#            client-secret: "myclientsecret"
+#            authorization-grant-type: "authorization_code"
+#            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc"
+#            scope:
+#              - openid
+          client-piyush-service: # using Keyclock
+            client-id: "client-piyush"
+            client-secret: "R1wnVN8EAR5LlxeZVq7onBEV6s2uI3TM"
             authorization-grant-type: "authorization_code"
-            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc"
+            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/client-piyush-service"
             scope:
               - openid
         provider:
-          my-client-oidc:
-            issuer-uri: http://auth-server:8000
+#          my-client-oidc:
+#            issuer-uri: http://auth-server:8000
+          client-piyush-service:
+            authorization-uri: http://localhost:8000/realms/piyush-app/protocol/openid-connect/auth
+            token-uri: http://localhost:8000/realms/piyush-app/protocol/openid-connect/token
+            jwk-set-uri: http://localhost:8000/realms/piyush-app/protocol/openid-connect/certs
+            user-info-uri: http://localhost:8000/realms/piyush-app/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+#            issuer-uri: http://localhost:8000/realms/piyush-app/protocol/openid-connect
+
+
+
 
