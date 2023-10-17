@@ -8,6 +8,7 @@
 
 package com.example.springbootoauthclients.controller;
 
+import java.util.Optional;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpEntity;
@@ -105,6 +106,70 @@ public class SimpleRestController {
                 .idToken(idTokenValue)
                 .accessToken(accessTokenValue)
                 .refreshToken(refreshTokenValue)
+                .build()
+        );
+    }
+
+    @GetMapping("/facebook/return-token")
+    public ResponseEntity<Object> getFacebookToken(@RegisteredOAuth2AuthorizedClient("facebook") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+
+        String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
+        String refreshToken = Optional.ofNullable(oAuth2AuthorizedClient.getRefreshToken()).map(OAuth2RefreshToken::getTokenValue).orElse(null);
+
+        return ResponseEntity.ok(
+
+            TokenDetails.builder()
+                .idToken("")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build()
+        );
+    }
+
+    @GetMapping("/google/return-token")
+    public ResponseEntity<Object> getGoogleToken(@RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+
+        String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
+        String refreshToken = Optional.ofNullable(oAuth2AuthorizedClient.getRefreshToken()).map(OAuth2RefreshToken::getTokenValue).orElse(null);
+
+        return ResponseEntity.ok(
+
+            TokenDetails.builder()
+                .idToken("")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build()
+        );
+    }
+
+    @GetMapping("/github/return-token")
+    public ResponseEntity<Object> getGitHubToken(@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+
+        String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
+        String refreshToken = Optional.ofNullable(oAuth2AuthorizedClient.getRefreshToken()).map(OAuth2RefreshToken::getTokenValue).orElse(null);
+
+        return ResponseEntity.ok(
+
+            TokenDetails.builder()
+                .idToken("")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build()
+        );
+    }
+
+    @GetMapping("/azure/return-token")
+    public ResponseEntity<Object> getAzureToken(@RegisteredOAuth2AuthorizedClient("my-azure") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+
+        String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
+        String refreshToken = Optional.ofNullable(oAuth2AuthorizedClient.getRefreshToken()).map(OAuth2RefreshToken::getTokenValue).orElse(null);
+
+        return ResponseEntity.ok(
+
+            TokenDetails.builder()
+                .idToken("")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build()
         );
     }

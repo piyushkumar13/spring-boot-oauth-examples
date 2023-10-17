@@ -19,6 +19,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
 /**
+ * This is used to fetch roles from realm_access claim in jwt token provided by keyclock.
+ *
  * @author Piyush Kumar.
  * @since 14/10/23.
  */
