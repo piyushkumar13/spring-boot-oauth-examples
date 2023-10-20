@@ -1,19 +1,4 @@
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          my-client-oidc:
-            client-id: "client1"
-            client-secret: "myclientsecret"
-            authorization-grant-type: "authorization_code"
-            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc"
-            scope:
-              - openid
-        provider:
-          my-client-oidc:
-            issuer-uri: http://auth-server:8000
-
   datasource:
     url: jdbc:mysql://localhost:3306/oauth2_db
     username: root
@@ -21,7 +6,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect

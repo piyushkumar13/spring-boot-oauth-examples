@@ -6,7 +6,7 @@
  *  AND CONSTITUTES A VALUABLE TRADE SECRET.
  */
 
-package com.example.springbootoauthclients.config;
+package com.example.springbootoauthclientscustomization.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +40,7 @@ public class Configs {
     /**
      * Webclient will pass access token automatically with every http request.
      * Webclient to pass accessToken automatically with every request, this filter is used to make it happen :
-     * {@link org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction}
+     * {@link ServletOAuth2AuthorizedClientExchangeFilterFunction}
      */
     @Bean
     WebClient webClient(ClientRegistrationRepository clientRegistrationRepository,

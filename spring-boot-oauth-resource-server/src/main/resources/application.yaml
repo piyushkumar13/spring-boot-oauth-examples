@@ -2,18 +2,18 @@ server:
   port: 8090
 
 # When using own auth server
-#spring:
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: http://auth-server:8000
-
-# When using keycloak as auth server
 spring:
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8000/realms/piyush-app
-#          jwk-set-uri: http://localhost:8000/realms/piyush-app/protocol/openid-connect/certs
+          issuer-uri: http://auth-server:8000
+
+# When using keycloak as auth server
+#spring:
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:8000/realms/piyush-app
+##          jwk-set-uri: http://localhost:8000/realms/piyush-app/protocol/openid-connect/certs

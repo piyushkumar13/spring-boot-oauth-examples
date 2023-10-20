@@ -30,7 +30,7 @@
 //@Data
 //@Slf4j
 //@SpringBootApplication
-//public class SpringBootOauthAuthServerJpaApplication implements ApplicationRunner {
+//public class SpringBootOauthAuthServerJpaWithPKCEApplication implements ApplicationRunner {
 //
 //    private final CustomRegisteredClientRepository customRegisteredClientRepository;
 //
@@ -39,7 +39,7 @@
 //    private final PasswordEncoder passwordEncoder;
 //
 //    public static void main(String[] args) {
-//        SpringApplication.run(SpringBootOauthAuthServerJpaApplication.class, args);
+//        SpringApplication.run(SpringBootOauthAuthServerJpaWithPKCEApplication.class, args);
 //    }
 //
 //    @Override
@@ -54,7 +54,7 @@
 //        requireAuthorizationConsent
 //        */
 //        ClientSettings clientSettings = ClientSettings.builder()
-//            .requireProofKey(false)
+//            .requireProofKey(true)
 //            .requireAuthorizationConsent(false)
 //            .build();
 //
@@ -72,22 +72,22 @@
 //
 //        CustomRegisteredClient customRegisteredClient = CustomRegisteredClient.builder()
 //            .id(id)
-//            .clientId("client1")
+//            .clientId("clientforpkce")
 //            .clientName(id)
-//            .clientSecret(passwordEncoder.encode("myclientsecret"))
+//            .clientSecret(passwordEncoder.encode("myclientsecretforpkce"))
 //            .authorizationGrantTypes(AuthorizationGrantType.AUTHORIZATION_CODE.getValue() + "," + AuthorizationGrantType.REFRESH_TOKEN.getValue())
-//            .redirectUris("http://127.0.0.1:8080/login/oauth2/code/my-client-oidc")
+//            .redirectUris("http://127.0.0.1:8080/login/oauth2/code/my-client-oidc-for-pkce")
 ////            .redirectUris("http://127.0.0.1:8080/authorized")
 //            .scopes(OidcScopes.OPENID + "," + "read")
-//            .clientAuthenticationMethods(ClientAuthenticationMethod.CLIENT_SECRET_BASIC.getValue())
+//            .clientAuthenticationMethods(ClientAuthenticationMethod.NONE.getValue())
 //            .clientSettings(writeMap(clientSettings.getSettings()))
 //            .tokenSettings(writeMap(tokenSettings.getSettings()))
 //            .clientIdIssuedAt(Instant.now())
 //            .clientSecretExpiresAt(Instant.now().plus(365, ChronoUnit.DAYS))
 //            .build();
 //
-//        if (customRegisteredClientRepository.findByClientId("client1").isEmpty()) {
-//            log.info("Saving client as it is not already present, clientId=client1");
+//        if (customRegisteredClientRepository.findByClientId("clientforpkce").isEmpty()) {
+//            log.info("Saving client as it is not already present, clientId=clientforpkce");
 //            customRegisteredClientRepository.save(customRegisteredClient);
 //        }
 //
@@ -98,7 +98,7 @@
 //        User user1 = User.builder()
 //            .firstName("Piyush")
 //            .lastName("Kumar")
-//            .emailId("pk@pk.com")
+//            .emailId("pk@pkce.com")
 //            .password(passwordEncoder.encode("piyush123"))
 //            .country("IN")
 //            .roles("ROLE_ADMIN")
@@ -106,16 +106,16 @@
 //            .isActive(true)
 //            .build();
 //
-//        User user1ByEmailId = userRepository.getUserByEmailId("pk@pk.com");
+//        User user1ByEmailId = userRepository.getUserByEmailId("pk@pkce.com");
 //        if (Objects.isNull(user1ByEmailId) || Objects.isNull(user1ByEmailId.getEmailId())){
-//            log.info("Saving user1 as it is not already present, emailId=pk@pk.com");
+//            log.info("Saving user1 as it is not already present, emailId=pk@pkce.com");
 //            userRepository.save(user1);
 //        }
 //
 //        User user2 = User.builder()
 //            .firstName("Sandeep")
 //            .lastName("Kumar")
-//            .emailId("sandeep@sandeep.com")
+//            .emailId("sandeep@pkce.com")
 //            .password(passwordEncoder.encode("sandeep123"))
 //            .country("IN")
 //            .roles("ROLE_USER")
@@ -123,9 +123,9 @@
 //            .isActive(true)
 //            .build();
 //
-//        User user2ByEmailId = userRepository.getUserByEmailId("sandeep@sandeep.com");
+//        User user2ByEmailId = userRepository.getUserByEmailId("sandeep@pkce.com");
 //        if (Objects.isNull(user2ByEmailId) || Objects.isNull(user2ByEmailId.getEmailId())){
-//            log.info("Saving user2 as it is not already present, emailId=sandeep@sandeep.com");
+//            log.info("Saving user2 as it is not already present, emailId=sandeep@pkce.com");
 //            userRepository.save(user2);
 //        }
 //
@@ -135,7 +135,7 @@
 //    private String writeMap(Map<String, Object> data) {
 //
 //        ObjectMapper objectMapper = new ObjectMapper();
-//        ClassLoader classLoader = SpringBootOauthAuthServerJpaApplication.class.getClassLoader();
+//        ClassLoader classLoader = SpringBootOauthAuthServerJpaWithPKCEApplication.class.getClassLoader();
 //        List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
 //        objectMapper.registerModules(securityModules);
 //        objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());

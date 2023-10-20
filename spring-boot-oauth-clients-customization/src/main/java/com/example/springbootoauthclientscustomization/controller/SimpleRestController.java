@@ -6,7 +6,7 @@
  *  AND CONSTITUTES A VALUABLE TRADE SECRET.
  */
 
-package com.example.springbootoauthclients.controller;
+package com.example.springbootoauthclientscustomization.controller;
 
 import java.util.Optional;
 import lombok.Builder;

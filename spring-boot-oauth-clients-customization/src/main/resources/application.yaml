@@ -4,21 +4,21 @@ spring:
     oauth2:
       client:
         registration:
-#          my-client-oidc:
-#            client-id: "client1"
-#            client-secret: "myclientsecret"
-#            authorization-grant-type: "authorization_code"
-#            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc"
-#            scope:
-#              - openid
-#          my-client-oidc-for-pkce:
-#            client-id: "clientforpkce"
-#            client-secret: "myclientsecretforpkce"
-#            authorization-grant-type: "authorization_code"
-#            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc-for-pkce"
-#            client-authentication-method: none
-#            scope:
-#              - openid
+          #          my-client-oidc:
+          #            client-id: "client1"
+          #            client-secret: "myclientsecret"
+          #            authorization-grant-type: "authorization_code"
+          #            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc"
+          #            scope:
+          #              - openid
+          #          my-client-oidc-for-pkce:
+          #            client-id: "clientforpkce"
+          #            client-secret: "myclientsecretforpkce"
+          #            authorization-grant-type: "authorization_code"
+          #            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc-for-pkce"
+          #            client-authentication-method: none
+          #            scope:
+          #              - openid
           my-client-oidc-for-pkce-with-secret-client:
             client-id: "clientforpkcewithsecretclient"
             client-secret: "myclientsecretforpkcewithsecretclient"
@@ -27,18 +27,18 @@ spring:
             client-authentication-method: "client_secret_basic" # optional to provide
             scope:
               - openid
-#          client-piyush-service: # using Keyclock
-#            client-id: "client-piyush"
-#            client-secret: "R1wnVN8EAR5LlxeZVq7onBEV6s2uI3TM"
-#            authorization-grant-type: "authorization_code"
-#            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/client-piyush-service"
-#            scope:
-#              - openid
+        #          client-piyush-service: # using Keyclock
+        #            client-id: "client-piyush"
+        #            client-secret: "R1wnVN8EAR5LlxeZVq7onBEV6s2uI3TM"
+        #            authorization-grant-type: "authorization_code"
+        #            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/client-piyush-service"
+        #            scope:
+        #              - openid
         provider:
-#          my-client-oidc:
-#            issuer-uri: http://auth-server:8000
-#          my-client-oidc-for-pkce:
-#            issuer-uri: http://auth-server:8000
+          #          my-client-oidc:
+          #            issuer-uri: http://auth-server:8000
+          #          my-client-oidc-for-pkce:
+          #            issuer-uri: http://auth-server:8000
           my-client-oidc-for-pkce-with-secret-client:
             issuer-uri: http://auth-server:8000
 #          client-piyush-service:
