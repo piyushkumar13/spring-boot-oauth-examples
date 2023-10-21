@@ -4,43 +4,43 @@ spring:
     oauth2:
       client:
         registration:
-          #          my-client-oidc:
-          #            client-id: "client1"
-          #            client-secret: "myclientsecret"
-          #            authorization-grant-type: "authorization_code"
-          #            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc"
-          #            scope:
-          #              - openid
-          #          my-client-oidc-for-pkce:
-          #            client-id: "clientforpkce"
-          #            client-secret: "myclientsecretforpkce"
-          #            authorization-grant-type: "authorization_code"
-          #            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc-for-pkce"
-          #            client-authentication-method: none
-          #            scope:
-          #              - openid
-          my-client-oidc-for-pkce-with-secret-client:
-            client-id: "clientforpkcewithsecretclient"
-            client-secret: "myclientsecretforpkcewithsecretclient"
+          my-client-oidc:
+            client-id: "client1"
+            client-secret: "myclientsecret"
             authorization-grant-type: "authorization_code"
-            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc-for-pkce-with-secret-client"
-            client-authentication-method: "client_secret_basic" # optional to provide
+            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc"
             scope:
               - openid
-        #          client-piyush-service: # using Keyclock
-        #            client-id: "client-piyush"
-        #            client-secret: "R1wnVN8EAR5LlxeZVq7onBEV6s2uI3TM"
-        #            authorization-grant-type: "authorization_code"
-        #            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/client-piyush-service"
-        #            scope:
-        #              - openid
+#          my-client-oidc-for-pkce:
+#            client-id: "clientforpkce"
+#            client-secret: "myclientsecretforpkce"
+#            authorization-grant-type: "authorization_code"
+#            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc-for-pkce"
+#            client-authentication-method: none
+#            scope:
+#              - openid
+#          my-client-oidc-for-pkce-with-secret-client:
+#            client-id: "clientforpkcewithsecretclient"
+#            client-secret: "myclientsecretforpkcewithsecretclient"
+#            authorization-grant-type: "authorization_code"
+#            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/my-client-oidc-for-pkce-with-secret-client"
+#            client-authentication-method: "client_secret_basic" # optional to provide
+#            scope:
+              - openid
+#          client-piyush-service: # using Keyclock
+#            client-id: "client-piyush"
+#            client-secret: "R1wnVN8EAR5LlxeZVq7onBEV6s2uI3TM"
+#            authorization-grant-type: "authorization_code"
+#            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/client-piyush-service"
+#            scope:
+#              - openid
         provider:
-          #          my-client-oidc:
-          #            issuer-uri: http://auth-server:8000
-          #          my-client-oidc-for-pkce:
-          #            issuer-uri: http://auth-server:8000
-          my-client-oidc-for-pkce-with-secret-client:
+          my-client-oidc:
             issuer-uri: http://auth-server:8000
+#          my-client-oidc-for-pkce:
+#            issuer-uri: http://auth-server:8000
+#          my-client-oidc-for-pkce-with-secret-client:
+#            issuer-uri: http://auth-server:8000
 #          client-piyush-service:
 #            authorization-uri: http://auth-server:8000/realms/piyush-app/protocol/openid-connect/auth
 #            token-uri: http://auth-server:8000/realms/piyush-app/protocol/openid-connect/token
@@ -48,34 +48,3 @@ spring:
 #            user-info-uri: http://auth-server:8000/realms/piyush-app/protocol/openid-connect/userinfo
 #            user-name-attribute: preferred_username
 #            issuer-uri: http://auth-server:8000/realms/piyush-app/protocol/openid-connect # or we can provide just issuer-uri
-
-
-################### Using social/cloud identity provider ##################
-
-#spring:
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-##          facebook:
-##            client-id: <provide client id>
-##            client-secret: <provide client secret>
-##          google:
-##            client-id: <provide client id>
-##            client-secret: <provide client secret>
-##          github:
-##            client-id: <provide client id>
-##            client-secret: <provide client secret>
-#          my-azure:
-#            client-id: 2067d7d1-4bdc-4c49-bed8-4a8127c5209e
-#            client-secret: rjI8Q~6AoBQKGKpINtywxqDcOYL8YaafVNbfScy6
-#            authorization-grant-type: "authorization_code"
-#            redirect-uri: "http://localhost:8080/login/oauth2/code/my-azure"
-#            scope:
-#              - openid
-#              - email
-#              - profile
-#              - User.Read
-#        provider:
-#          my-azure:
-#            issuer-uri: https://login.microsoftonline.com/a5252d54-58e4-421a-b413-f3043962002e/v2.0
