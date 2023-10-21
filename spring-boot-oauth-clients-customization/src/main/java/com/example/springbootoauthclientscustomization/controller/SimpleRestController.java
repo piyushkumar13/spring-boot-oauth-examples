@@ -45,8 +45,47 @@ public class SimpleRestController {
     private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
     private final WebClient webClient;
 
+
+    @GetMapping("/return-token")
+    public ResponseEntity<Object> getToken(@AuthenticationPrincipal OidcUser oidcUser) {
+
+        OidcIdToken idToken = oidcUser.getIdToken();
+        System.out.println("IdToken ::: " + idToken);
+
+        String idTokenValue = idToken.getTokenValue();
+        System.out.println("IdToken value ::: " + idTokenValue);
+
+        /* Following lines of code working can also be achieved by using @RegisteredOAuth2AuthorizedClient("client-piyush-service") annotation. */
+        OAuth2AuthenticationToken authentication = (OAuth2AuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        OAuth2AuthorizedClient oAuth2AuthorizedClient = oAuth2AuthorizedClientService.loadAuthorizedClient(authentication.getAuthorizedClientRegistrationId(), authentication.getName());
+
+        OAuth2AccessToken accessToken = oAuth2AuthorizedClient.getAccessToken();
+        System.out.println("AccessToken ::: " + accessToken);
+
+        String accessTokenValue = accessToken.getTokenValue();
+        System.out.println("AccessTokenValue ::: " + accessTokenValue);
+
+        OAuth2RefreshToken refreshToken = oAuth2AuthorizedClient.getRefreshToken();
+        System.out.println("RefreshToken ::: " + refreshToken);
+
+        String refreshTokenValue = null;
+        if (refreshToken != null) {
+            refreshTokenValue = refreshToken.getTokenValue();
+            System.out.println("RefreshTokenValue ::: " + refreshTokenValue);
+        }
+
+        return ResponseEntity.ok(
+
+            TokenDetails.builder()
+                .idToken(idTokenValue)
+                .accessToken(accessTokenValue)
+                .refreshToken(refreshTokenValue)
+                .build()
+        );
+    }
+
     @GetMapping("/test-client")
-    public ResponseEntity<Object> getResponse(@RegisteredOAuth2AuthorizedClient("my-client-oidc") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+    public ResponseEntity<Object> getResponse(@RegisteredOAuth2AuthorizedClient("my-client-oidc") OAuth2AuthorizedClient oAuth2AuthorizedClient) {
 
         String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
 
@@ -59,7 +98,7 @@ public class SimpleRestController {
     }
 
     @GetMapping("/test-client-for-pkce")
-    public ResponseEntity<Object> getResponseForPKCE(@RegisteredOAuth2AuthorizedClient("my-client-oidc-for-pkce") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+    public ResponseEntity<Object> getResponseForPKCE(@RegisteredOAuth2AuthorizedClient("my-client-oidc-for-pkce") OAuth2AuthorizedClient oAuth2AuthorizedClient) {
 
         String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
 
@@ -72,7 +111,7 @@ public class SimpleRestController {
     }
 
     @GetMapping("/test-client-for-pkce-with-secret-client")
-    public ResponseEntity<Object> getResponseForPKCEWithSecretClient(@RegisteredOAuth2AuthorizedClient("my-client-oidc-for-pkce-with-secret-client") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+    public ResponseEntity<Object> getResponseForPKCEWithSecretClient(@RegisteredOAuth2AuthorizedClient("my-client-oidc-for-pkce-with-secret-client") OAuth2AuthorizedClient oAuth2AuthorizedClient) {
 
         String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
 
@@ -91,7 +130,7 @@ public class SimpleRestController {
      * {@link org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction}
      */
     @GetMapping("/test-web-client")
-    public String getResponseUsingWebClient(){
+    public String getResponseUsingWebClient() {
 
         return webClient.get()
             .uri(url)
@@ -101,7 +140,7 @@ public class SimpleRestController {
     }
 
     @GetMapping("/keyclock/return-token")
-    public ResponseEntity<Object> getToken(@AuthenticationPrincipal OidcUser oidcUser){
+    public ResponseEntity<Object> getTokenForKeyclock(@AuthenticationPrincipal OidcUser oidcUser) {
 
         OidcIdToken idToken = oidcUser.getIdToken();
         System.out.println("IdToken ::: " + idToken);
@@ -123,8 +162,11 @@ public class SimpleRestController {
         OAuth2RefreshToken refreshToken = oAuth2AuthorizedClient.getRefreshToken();
         System.out.println("RefreshToken ::: " + refreshToken);
 
-        String refreshTokenValue = refreshToken.getTokenValue();
-        System.out.println("RefreshTokenValue ::: " + refreshTokenValue);
+        String refreshTokenValue = null;
+        if (refreshToken != null) {
+            refreshTokenValue = refreshToken.getTokenValue();
+            System.out.println("RefreshTokenValue ::: " + refreshTokenValue);
+        }
 
         return ResponseEntity.ok(
 
@@ -137,7 +179,7 @@ public class SimpleRestController {
     }
 
     @GetMapping("/facebook/return-token")
-    public ResponseEntity<Object> getFacebookToken(@RegisteredOAuth2AuthorizedClient("facebook") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+    public ResponseEntity<Object> getFacebookToken(@RegisteredOAuth2AuthorizedClient("facebook") OAuth2AuthorizedClient oAuth2AuthorizedClient) {
 
         String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
         String refreshToken = Optional.ofNullable(oAuth2AuthorizedClient.getRefreshToken()).map(OAuth2RefreshToken::getTokenValue).orElse(null);
@@ -153,7 +195,7 @@ public class SimpleRestController {
     }
 
     @GetMapping("/google/return-token")
-    public ResponseEntity<Object> getGoogleToken(@RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+    public ResponseEntity<Object> getGoogleToken(@RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient oAuth2AuthorizedClient) {
 
         String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
         String refreshToken = Optional.ofNullable(oAuth2AuthorizedClient.getRefreshToken()).map(OAuth2RefreshToken::getTokenValue).orElse(null);
@@ -169,7 +211,7 @@ public class SimpleRestController {
     }
 
     @GetMapping("/github/return-token")
-    public ResponseEntity<Object> getGitHubToken(@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+    public ResponseEntity<Object> getGitHubToken(@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient oAuth2AuthorizedClient) {
 
         String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
         String refreshToken = Optional.ofNullable(oAuth2AuthorizedClient.getRefreshToken()).map(OAuth2RefreshToken::getTokenValue).orElse(null);
@@ -185,7 +227,7 @@ public class SimpleRestController {
     }
 
     @GetMapping("/azure/return-token")
-    public ResponseEntity<Object> getAzureToken(@RegisteredOAuth2AuthorizedClient("my-azure") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+    public ResponseEntity<Object> getAzureToken(@RegisteredOAuth2AuthorizedClient("my-azure") OAuth2AuthorizedClient oAuth2AuthorizedClient) {
 
         String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
         String refreshToken = Optional.ofNullable(oAuth2AuthorizedClient.getRefreshToken()).map(OAuth2RefreshToken::getTokenValue).orElse(null);

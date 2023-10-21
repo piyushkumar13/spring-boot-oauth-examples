@@ -40,6 +40,10 @@ public class SetSecurityContextFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        /* TODO : Here we can also validate the cookie expiry and access token expiry so that we wont set the security context and flow will
+        *  TODO : then go to AnonymousAuthenticationFilter which will create a new empty context and then goes to eventually FilterSecurityFilter which
+        *  TODO : will throw the access denied exception and will raise error and along with configuring, failure handler to route to login page or any endpoint which we
+        *  TODO : would like to configure in order to re-allow login, we can again fetch access token.*/
         CustomSavedRequestAwareAuthenticationSuccessHandler.AuthenticationDataToStore authenticationData = CookieHelper.retrieve(request.getCookies(), AUTHENTICATION_OBJ)
             .map(EncryptionHelper::decrypt)
             .filter(CustomSavedRequestAwareAuthenticationSuccessHandler.AuthenticationDataToStore.class::isInstance)

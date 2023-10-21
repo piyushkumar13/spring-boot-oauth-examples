@@ -40,7 +40,6 @@ import org.springframework.stereotype.Component;
  * @author Piyush Kumar.
  * @since 21/10/23.
  */
-
 @Component
 public class CustomSavedRequestAwareAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
@@ -74,13 +73,15 @@ public class CustomSavedRequestAwareAuthenticationSuccessHandler extends SavedRe
         Instant issuedAt = oidcUser.getIssuedAt();
         Instant expiresAt = oidcUser.getExpiresAt();
 
+//        oAuth2AuthorizedClientService.loadAuthorizedClient(principal.getName(), principal.getName());
+
         return AuthenticationDataToStore.builder()
             .idToken(idToken)
             .claims(claims)
             .authorities(getAuthorities(principal.getAuthorities()))
             .issuedAt(issuedAt)
             .expiresAt(expiresAt)
-            .authorizedClientRegistrationId("my-client-oidc")
+            .authorizedClientRegistrationId(authToken.getAuthorizedClientRegistrationId())
             .build();
     }
 
