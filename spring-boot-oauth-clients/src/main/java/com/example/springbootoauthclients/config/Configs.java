@@ -65,20 +65,20 @@ public class Configs {
      * {@link DefaultOAuth2AuthorizationRequestResolver#authorizationRequestCustomizer},
      * {@link DefaultOAuth2AuthorizationRequestResolver#DEFAULT_PKCE_APPLIER}
      */
-    @Bean
-    public SecurityFilterChain configureFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
-
-        String uri = OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI;
-
-        DefaultOAuth2AuthorizationRequestResolver resolver = new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, uri);
-        resolver.setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce());
-        return http.authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
-            .oauth2Login(oauth2Login -> {
-                oauth2Login.authorizationEndpoint().authorizationRequestResolver(resolver);
-            })
-            .oauth2Client(Customizer.withDefaults())
-            .build();
-    }
+//    @Bean
+//    public SecurityFilterChain configureFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
+//
+//        String uri = OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI;
+//
+//        DefaultOAuth2AuthorizationRequestResolver resolver = new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, uri);
+//        resolver.setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce());
+//        return http.authorizeRequests()
+//            .anyRequest().authenticated()
+//            .and()
+//            .oauth2Login(oauth2Login -> {
+//                oauth2Login.authorizationEndpoint().authorizationRequestResolver(resolver);
+//            })
+//            .oauth2Client(Customizer.withDefaults())
+//            .build();
+//    }
 }

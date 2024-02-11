@@ -17,3 +17,12 @@ spring:
 #        jwt:
 #          issuer-uri: http://localhost:8000/realms/piyush-app
 ##          jwk-set-uri: http://localhost:8000/realms/piyush-app/protocol/openid-connect/certs
+
+
+## When using okta auth server
+#spring:
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: https://dev-99081710.okta.com/oauth2/default

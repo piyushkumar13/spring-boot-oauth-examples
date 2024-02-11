@@ -79,3 +79,24 @@ spring:
 #        provider:
 #          my-azure:
 #            issuer-uri: https://login.microsoftonline.com/a5252d54-58e4-421a-b413-f3043962002e/v2.0
+
+
+##################### Using Okta #########################
+#spring:
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          okta:
+#            client-id: "0oaf2v08rx0GauIqe5d7"
+#            client-secret: "EWsgycWdmvMzCLdjNpjbpQyv66bKUwXDK6Tbi00xT9gp286KfwZn-3pPcheh0Bbc"
+#            authorization-grant-type: "authorization_code"
+#            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/okta"
+#            scope:
+#              - openid
+#              - profile
+#              - email
+#              - address
+#        provider:
+#          okta:
+#            issuer-uri: https://dev-99081710.okta.com/oauth2/default

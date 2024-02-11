@@ -14,6 +14,7 @@ import lombok.Data;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,6 +45,14 @@ public class SimpleRestController {
     private final RestTemplate restTemplate;
     private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
     private final WebClient webClient;
+
+
+    @GetMapping(value = "/hello", produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<Object> getHelloResponse(){
+
+        return ResponseEntity.ok("Hello to OAuth examples");
+    }
+
 
     @GetMapping("/test-client")
     public ResponseEntity<Object> getResponse(@RegisteredOAuth2AuthorizedClient("my-client-oidc") OAuth2AuthorizedClient oAuth2AuthorizedClient){
@@ -198,6 +207,41 @@ public class SimpleRestController {
                 .refreshToken(refreshToken)
                 .build()
         );
+    }
+
+    @GetMapping("/okta/return-token")
+    public ResponseEntity<Object> getOktaToken(@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient oAuth2AuthorizedClient, @AuthenticationPrincipal OidcUser oidcUser){
+
+        OidcIdToken idToken = oidcUser.getIdToken();
+        System.out.println("IdToken ::: " + idToken);
+
+        String idTokenValue = idToken.getTokenValue();
+        System.out.println("IdToken value ::: " + idTokenValue);
+
+        String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
+        String refreshToken = Optional.ofNullable(oAuth2AuthorizedClient.getRefreshToken()).map(OAuth2RefreshToken::getTokenValue).orElse(null);
+
+        return ResponseEntity.ok(
+
+            TokenDetails.builder()
+                .idToken(idTokenValue)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build()
+        );
+    }
+
+    @GetMapping("/test-client-for-okta")
+    public ResponseEntity<Object> getResponseForOkta(@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient oAuth2AuthorizedClient){
+
+        String accessToken = oAuth2AuthorizedClient.getAccessToken().getTokenValue();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        return restTemplate.exchange(url, HttpMethod.GET, entity, Object.class);
     }
 
     @Data
